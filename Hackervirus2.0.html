@@ -1,0 +1,446 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HACKER VIRUS V4</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #050000;
+  color: #ff2525;
+  font-family: monospace;
+  text-align: center;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: .45;
+}
+
+.top-alert {
+  background: red;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: .4; }
+}
+
+.skull {
+  font-size: 75px;
+  text-shadow: 0 0 25px red;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.12);
+    text-shadow: 0 0 45px red;
+  }
+}
+
+h1 {
+  color: red;
+  text-shadow: 0 0 15px red;
+}
+
+.login, .panel {
+  width: 92%;
+  max-width: 450px;
+  margin: 35px auto;
+  padding: 22px;
+  background: rgba(10,0,0,.95);
+  border: 2px solid red;
+  box-shadow: 0 0 20px red;
+  border-radius: 12px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  background: black;
+  color: red;
+  border: 1px solid red;
+  font-size: 16px;
+}
+
+button {
+  padding: 13px;
+  width: 100%;
+  margin: 7px 0;
+  background: red;
+  color: white;
+  border: none;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:active {
+  background: darkred;
+}
+
+.dashboard {
+  display: none;
+  width: 94%;
+  max-width: 950px;
+  margin: 20px auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.card {
+  background: rgba(15,0,0,.96);
+  border: 1px solid red;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #600;
+}
+
+.card h3 {
+  color: #ff3333;
+  margin-top: 0;
+}
+
+.value {
+  font-size: 22px;
+  color: white;
+  margin: 10px;
+}
+
+.terminal {
+  background: #050000;
+  border: 1px solid red;
+  padding: 15px;
+  text-align: left;
+  height: 180px;
+  overflow-y: auto;
+  line-height: 1.8;
+  font-size: 12px;
+}
+
+.status {
+  color: #ff3333;
+}
+
+footer {
+  padding: 20px;
+  font-size: 12px;
+}
+
+@media(max-width: 350px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-alert">
+⚠ VIRUS ALERT — SAFE DEMO SIMULATION ⚠
+</div>
+
+<canvas id="matrix"></canvas>
+
+<!-- LOGIN -->
+<div class="login" id="loginBox">
+
+<div class="skull">💀</div>
+
+<h1>HACKER VIRUS</h1>
+
+<p>ULTIMATE SECURITY SYSTEM V4</p>
+
+<p>🔴 RED ALERT MODE</p>
+
+<input id="username"
+placeholder="ENTER USERNAME">
+
+<input id="password"
+type="password"
+placeholder="ENTER PASSWORD">
+
+<button onclick="login()">
+☠ ACCESS SYSTEM
+</button>
+
+<p id="message">SYSTEM STANDBY...</p>
+
+<p class="status">
+AUTHORIZED DEMO ACCESS ONLY
+</p>
+
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+
+<div class="skull">💀</div>
+
+<h1>HACKER CONTROL CENTER</h1>
+
+<p>WELCOME TO THE RED ZONE</p>
+
+<h2 id="clock">00:00:00</h2>
+<p id="date"></p>
+
+<div class="grid">
+
+<div class="card">
+<h3>SYSTEM STATUS</h3>
+<div class="value">ONLINE</div>
+<p>DEMO MODE</p>
+</div>
+
+<div class="card">
+<h3>THREAT LEVEL</h3>
+<div class="value">HIGH</div>
+<p>SIMULATED ALERT</p>
+</div>
+
+<div class="card">
+<h3>FIREWALL</h3>
+<div class="value">ACTIVE</div>
+<p>DEMO STATUS</p>
+</div>
+
+<div class="card">
+<h3>SECURITY</h3>
+<div class="value">READY</div>
+<p>LOCAL SIMULATION</p>
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+<h3>☠ HACKER TERMINAL</h3>
+
+<div class="terminal" id="terminal">
+> Initializing system...<br>
+> Loading demo interface...<br>
+> Matrix animation active...<br>
+> Welcome to Hacker Zone!<br>
+</div>
+
+<button onclick="addLog()">
+RUN DEMO TERMINAL
+</button>
+
+<button onclick="scan()">
+RUN SECURITY DEMO
+</button>
+
+<p id="scanResult"></p>
+</div>
+
+<br>
+
+<div class="card">
+<h3>🔴 VIRUS ALERT CENTER</h3>
+<p class="status">WARNING: SIMULATED THREAT DETECTED</p>
+<p>This is a visual demonstration only.</p>
+<button onclick="alertDemo()">
+SHOW ALERT
+</button>
+</div>
+
+<button onclick="logout()">
+LOGOUT SYSTEM
+</button>
+
+</div>
+
+<footer>
+HACKER VIRUS V4.0<br>
+ULTIMATE RED EDITION<br>
+SAFE VISUAL SIMULATION © 2026
+</footer>
+
+<script>
+
+// LOGIN DEMO
+function login() {
+
+  let user =
+    document.getElementById("username").value;
+
+  let pass =
+    document.getElementById("password").value;
+
+  let msg =
+    document.getElementById("message");
+
+  if(user === "admin" && pass === "1234") {
+
+    document.getElementById("loginBox")
+      .style.display = "none";
+
+    document.getElementById("dashboard")
+      .style.display = "block";
+
+  } else {
+
+    msg.innerHTML = "❌ ACCESS DENIED!";
+  }
+}
+
+// LOGOUT
+function logout() {
+
+  document.getElementById("dashboard")
+    .style.display = "none";
+
+  document.getElementById("loginBox")
+    .style.display = "block";
+
+  document.getElementById("password").value = "";
+}
+
+// CLOCK
+function updateClock() {
+
+  let now = new Date();
+
+  document.getElementById("clock")
+    .innerHTML = now.toLocaleTimeString();
+
+  document.getElementById("date")
+    .innerHTML = now.toDateString();
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+// TERMINAL
+let logs = [
+  "> System check complete...",
+  "> Demo terminal running...",
+  "> Red alert interface active...",
+  "> Matrix system initialized...",
+  "> Security simulation ready...",
+  "> No external files accessed..."
+];
+
+function addLog() {
+
+  let terminal =
+    document.getElementById("terminal");
+
+  let line =
+    logs[Math.floor(Math.random() * logs.length)];
+
+  terminal.innerHTML += "<br>" + line;
+
+  terminal.scrollTop = terminal.scrollHeight;
+}
+
+// SAFE SCAN DEMO
+function scan() {
+
+  let result =
+    document.getElementById("scanResult");
+
+  result.innerHTML = "🔴 RUNNING DEMO SCAN...";
+
+  setTimeout(function() {
+
+    result.innerHTML =
+      "✓ DEMO COMPLETE — NO FILES ACCESSED.";
+
+    addLog();
+
+  }, 1500);
+}
+
+// ALERT
+function alertDemo() {
+
+  alert(
+    "⚠ VIRUS ALERT!\n\n" +
+    "This is a simulated hacker warning.\n" +
+    "No actual virus detected."
+  );
+}
+
+// MATRIX BACKGROUND
+const canvas =
+  document.getElementById("matrix");
+
+const ctx = canvas.getContext("2d");
+
+let size = 16;
+let drops = [];
+
+function resize() {
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  drops = Array(
+    Math.floor(canvas.width / size)
+  ).fill(1);
+}
+
+window.addEventListener("resize", resize);
+resize();
+
+let letters = "01 HACKER VIRUS RED";
+
+function draw() {
+
+  ctx.fillStyle = "rgba(0,0,0,0.10)";
+
+  ctx.fillRect(
+    0, 0, canvas.width, canvas.height
+  );
+
+  ctx.fillStyle = "#ff0000";
+  ctx.font = size + "px monospace";
+
+  drops.forEach(function(y, i) {
+
+    let char = letters[
+      Math.floor(Math.random() * letters.length)
+    ];
+
+    ctx.fillText(char, i * size, y * size);
+
+    if (
+      y * size > canvas.height &&
+      Math.random() > 0.97
+    ) {
+      drops[i] = 0;
+    }
+
+    drops[i]++;
+  });
+}
+
+setInterval(draw, 50);
+
+</script>
+
+</body>
+</html>
