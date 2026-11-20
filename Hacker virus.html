@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HACKER VIRUS V2</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #000;
+  color: #00ff41;
+  font-family: monospace;
+  text-align: center;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.login, .dashboard {
+  width: 90%;
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 25px;
+  background: rgba(0,0,0,.92);
+  border: 2px solid #00ff41;
+  box-shadow: 0 0 25px #00ff41;
+  border-radius: 12px;
+}
+
+h1 {
+  text-shadow: 0 0 15px #00ff41;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  background: #050505;
+  border: 1px solid #00ff41;
+  color: #00ff41;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  background: #00ff41;
+  color: black;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: white;
+  box-shadow: 0 0 20px #00ff41;
+}
+
+.alert {
+  color: red;
+  animation: blink 1s infinite;
+  font-weight: bold;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.dashboard {
+  display: none;
+}
+
+.terminal {
+  background: #050505;
+  padding: 15px;
+  text-align: left;
+  border: 1px solid #00ff41;
+  line-height: 2;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="login" id="loginBox">
+
+<h1>☠ HACKER VIRUS</h1>
+<p>CYBER SECURITY TERMINAL</p>
+
+<p class="alert">⚠ VIRUS ALERT ⚠</p>
+
+<input id="username"
+placeholder="Enter Username">
+
+<input id="password"
+type="password"
+placeholder="Enter Password">
+
+<button onclick="login()">LOGIN SYSTEM</button>
+
+<p id="message">SYSTEM READY...</p>
+
+<p>AUTHORIZED DEMO ACCESS ONLY</p>
+
+</div>
+
+<div class="dashboard" id="dashboard">
+
+<h1>ACCESS GRANTED</h1>
+
+<p>WELCOME TO HACKER ZONE</p>
+
+<div class="terminal" id="terminal">
+> System connected...<br>
+> Security simulation active...<br>
+> Welcome, Admin!
+</div>
+
+<button onclick="simulate()">RUN DEMO SCAN</button>
+<button onclick="logout()">LOGOUT</button>
+
+<p id="scanResult"></p>
+
+</div>
+
+<script>
+
+// DEMO LOGIN ONLY
+function login() {
+  let user = document.getElementById("username").value;
+  let pass = document.getElementById("password").value;
+  let msg = document.getElementById("message");
+
+  if(user === "admin" && pass === "1234") {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+  } else {
+    msg.innerHTML = "ACCESS DENIED!";
+  }
+}
+
+function logout() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("loginBox").style.display = "block";
+  document.getElementById("password").value = "";
+}
+
+function simulate() {
+  document.getElementById("scanResult").innerHTML =
+    "DEMO SCAN COMPLETE! NO FILES WERE ACCESSED.";
+}
+
+// MATRIX EFFECT
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+resize();
+window.addEventListener("resize", resize);
+
+let letters = "01 HACKER VIRUS";
+let size = 16;
+let drops = [];
+
+function resetDrops() {
+  drops = Array(Math.floor(canvas.width / size)).fill(1);
+}
+
+resetDrops();
+window.addEventListener("resize", resetDrops);
+
+function draw() {
+  ctx.fillStyle = "rgba(0,0,0,0.08)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = "#00ff41";
+  ctx.font = size + "px monospace";
+
+  drops.forEach((y,i) => {
+    let char = letters[
+      Math.floor(Math.random() * letters.length)
+    ];
+
+    ctx.fillText(char,i*size,y*size);
+
+    if(y*size > canvas.height && Math.random() > 0.97) {
+      drops[i] = 0;
+    }
+
+    drops[i]++;
+  });
+}
+
+setInterval(draw,50);
+
+</script>
+
+</body>
+</html>
